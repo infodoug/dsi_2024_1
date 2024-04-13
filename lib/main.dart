@@ -1,87 +1,87 @@
 import 'package:flutter/material.dart';
+import 'loginpage.dart';
+import 'registrationpage.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Flutter Demo',
-      home: Login(title: 'Flutter Demo Home Page'),
+      home: AuthenticationPage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class Login extends StatefulWidget {
-  const Login({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
+class AuthenticationPage extends StatefulWidget {
+  const AuthenticationPage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  State<Login> createState() => _LoginState();
+  State<AuthenticationPage> createState() => _AuthenticationPageState();
 }
 
-class _LoginState extends State<Login> {
+class _AuthenticationPageState extends State<AuthenticationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(colors: [
-            Color(0xFF28730E),
-            Color(0xFF6EB855),
-          ], begin: Alignment.topCenter, end: Alignment.bottomCenter),
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFF28730E),
+              Color(0xFF6EB855),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
         ),
-        child: const Center(child: LoginBox()),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  showLoginCard();
+                },
+                child: const Text('Fazer login'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  showRegistrationCard();
+                },
+                child: const Text('Cadastre-se'),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
-}
 
-class LoginBox extends StatefulWidget {
-  const LoginBox({super.key});
-
-  @override
-  State<LoginBox> createState() => _LoginBoxState();
-}
-
-class _LoginBoxState extends State<LoginBox> {
-  bool buttonclicked = false;
-  @override
-  Widget build(BuildContext context) {
-    return (!buttonclicked)
-        ? Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        buttonclicked = true;
-                      });
-                    },
-                    child: const Text('Try Login with Google'))
-              ],
-            ),
-          )
-        : Container(
-            color: Colors.white,
-            height: 100,
-            width: 80,
+  void showLoginCard() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return const Center(
+            child: LoginPage(),
           );
+        });
+  }
+
+  void showRegistrationCard() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return const Center(
+            child: RegistrationPage(),
+          );
+        });
   }
 }
