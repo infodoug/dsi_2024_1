@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'loginpage.dart';
 import 'registrationpage.dart';
+import 'homepage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,9 +12,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Flutter Demo',
-      home: AuthenticationPage(title: 'Flutter Demo Home Page'),
+    return MaterialApp(
+      initialRoute: '/',
+      routes: {
+        '/': (context) => AuthenticationPage(
+              title: 'AuthPage',
+            ), // Rota para a tela inicial
+        '/home': (context) => HomePage(), // Rota para a tela de detalhes
+      },
     );
   }
 }

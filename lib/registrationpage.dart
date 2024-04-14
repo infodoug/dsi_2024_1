@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'user.dart';
+import 'listusers.dart';
 
 class RegistrationPage extends StatelessWidget {
   const RegistrationPage({super.key});
@@ -33,6 +35,11 @@ class _CamposRegistrationState extends State<CamposRegistration> {
 
   final _formKey = GlobalKey<FormState>();
 
+  final TextEditingController _nomeController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _senhaController = TextEditingController();
+  final TextEditingController _senhaconfirmController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -56,15 +63,23 @@ class _CamposRegistrationState extends State<CamposRegistration> {
                         height: 10,
                       ),
                       TextFormField(
+                        controller: _nomeController,
                         decoration: const InputDecoration(
                           hintText: 'Nome',
                           prefixIcon: Icon(Icons.person),
                         ),
+                        validator: (String? value) {
+                          if (value!.isEmpty) {
+                            return "Digite um nome válido";
+                          }
+                          return null;
+                        },
                       ),
                       const SizedBox(
                         height: 10,
                       ),
                       TextFormField(
+                        controller: _emailController,
                         decoration: const InputDecoration(
                           hintText: 'E-mail',
                           prefixIcon: Icon(Icons.email),
@@ -81,6 +96,9 @@ class _CamposRegistrationState extends State<CamposRegistration> {
                           if (!value.contains("@")) {
                             return "E-mail inválido";
                           }
+                          if (users.any((user) => user.email == value)) {
+                            return "Este e-mail já foi cadastrado";
+                          }
                           return null;
                         },
                       ),
@@ -88,6 +106,7 @@ class _CamposRegistrationState extends State<CamposRegistration> {
                         height: 10,
                       ),
                       TextFormField(
+                        controller: _senhaController,
                         decoration: InputDecoration(
                           hintText: 'Senha',
                           prefixIcon: const Icon(Icons.lock),
@@ -103,11 +122,18 @@ class _CamposRegistrationState extends State<CamposRegistration> {
                                   : const Icon(Icons.visibility_off_outlined)),
                         ),
                         obscureText: _isobscured,
+                        validator: (String? value) {
+                          if (value!.isEmpty) {
+                            return "Senha inválida";
+                          }
+                          return null;
+                        },
                       ),
                       const SizedBox(
                         height: 10,
                       ),
                       TextFormField(
+                        controller: _senhaconfirmController,
                         decoration: InputDecoration(
                           hintText: 'Confirme sua senha',
                           prefixIcon: const Icon(Icons.lock),
@@ -123,13 +149,27 @@ class _CamposRegistrationState extends State<CamposRegistration> {
                                   : const Icon(Icons.visibility_off_outlined)),
                         ),
                         obscureText: _isobscuredconfirm,
+                        validator: (String? value) {
+                          if (value!.isEmpty) {
+                            return "Confirmação de senha não pode ser vazia";
+                          }
+                          if (value != _senhaController.text) {
+                            return "As senhas não coincidem";
+                          }
+                          return null;
+                        },
                       ),
                       const SizedBox(
                         height: 20,
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          cadastrar();
+                          final nome = _nomeController.text;
+                          final email = _emailController.text;
+                          final senha = _senhaController.text;
+                          dynamic user =
+                              User(nome: nome, email: email, senha: senha);
+                          cadastrar(user);
                         },
                         style: const ButtonStyle(
                           backgroundColor: MaterialStatePropertyAll(
@@ -152,11 +192,34 @@ class _CamposRegistrationState extends State<CamposRegistration> {
     );
   }
 
-  cadastrar() {
+  void cadastrar(u) {
     if (_formKey.currentState!.validate()) {
-      print("válido");
+      users.add(u);
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
+          ),
+          content: Text(
+            'Conta criada com sucesso!',
+            style: TextStyle(
+              color: Color(0xFF28730E),
+            ),
+          ),
+        ),
+      );
+      for (dynamic usr in users) {
+        print(usr.nome);
+        print(usr.email);
+        print(usr.senha);
+      }
     } else {
-      print("não!");
+      print('Não cadastrado!');
     }
   }
 }
