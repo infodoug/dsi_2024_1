@@ -115,6 +115,15 @@ class _CamposLoginState extends State<CamposLogin> {
                             }
                             return null;
                           }),
+                      TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          'Esqueceu a senha?',
+                          style: TextStyle(
+                            color: Color(0xFF6EB855),
+                          ),
+                        ),
+                      ),
                       const SizedBox(
                         height: 30,
                       ),
@@ -124,7 +133,7 @@ class _CamposLoginState extends State<CamposLogin> {
                         },
                         style: const ButtonStyle(
                           backgroundColor: MaterialStatePropertyAll(
-                            Color(0xFF6EB855),
+                            Color(0xFF28730E),
                           ),
                           foregroundColor: MaterialStatePropertyAll(
                             Colors.white,

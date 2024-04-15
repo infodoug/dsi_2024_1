@@ -13,6 +13,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        fontFamily: 'OpenSans',
+      ),
       initialRoute: '/',
       routes: {
         '/': (context) => AuthenticationPage(
@@ -52,6 +55,7 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Image.asset('assets/images/logo-1.png'),
               ElevatedButton(
                 onPressed: () {
                   showLoginCard();
