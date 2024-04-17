@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'user.dart';
 import 'listusers.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class RegistrationPage extends StatelessWidget {
   const RegistrationPage({super.key});
@@ -8,7 +9,7 @@ class RegistrationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FractionallySizedBox(
-        heightFactor: 0.6,
+        heightFactor: 0.8,
         widthFactor: 0.8,
         child: Container(
           decoration: BoxDecoration(
@@ -124,7 +125,10 @@ class _CamposRegistrationState extends State<CamposRegistration> {
                         obscureText: _isobscured,
                         validator: (String? value) {
                           if (value!.isEmpty) {
-                            return "Senha inválida";
+                            return "Senha não pode ficar vazia";
+                          }
+                          if (value.length < 6) {
+                            return "A Senha precisa ter no mínimo 6 dígitos";
                           }
                           return null;
                         },
@@ -160,7 +164,7 @@ class _CamposRegistrationState extends State<CamposRegistration> {
                         },
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 40,
                       ),
                       ElevatedButton(
                         onPressed: () {
@@ -180,7 +184,17 @@ class _CamposRegistrationState extends State<CamposRegistration> {
                           ),
                         ),
                         child: const Text('Criar conta'),
-                      )
+                      ),
+                      const SizedBox(height: 5),
+                      ElevatedButton.icon(
+                        onPressed: () {},
+                        icon: SvgPicture.asset(
+                          'assets/icons/google.svg',
+                          height: 20,
+                          width: 20,
+                        ),
+                        label: Text('Cadastre-se com o Google'),
+                      ),
                     ],
                   ),
                 ),

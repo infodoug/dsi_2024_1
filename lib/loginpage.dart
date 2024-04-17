@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 import 'listusers.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -8,7 +9,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FractionallySizedBox(
-        heightFactor: 0.5,
+        heightFactor: 0.6,
         widthFactor: 0.8,
         child: Container(
           decoration: BoxDecoration(
@@ -104,6 +105,9 @@ class _CamposLoginState extends State<CamposLogin> {
                             if (value!.isEmpty) {
                               return "Digite sua senha";
                             }
+                            if (value.length < 6) {
+                              return "Senha incorreta";
+                            }
                             dynamic _usuarioEncontrado = users.firstWhereOrNull(
                                 (user) =>
                                     user.email == _loginemailController.text);
@@ -125,7 +129,7 @@ class _CamposLoginState extends State<CamposLogin> {
                         ),
                       ),
                       const SizedBox(
-                        height: 30,
+                        height: 20,
                       ),
                       ElevatedButton(
                         onPressed: () {
@@ -140,7 +144,17 @@ class _CamposLoginState extends State<CamposLogin> {
                           ),
                         ),
                         child: const Text('Entrar'),
-                      )
+                      ),
+                      const SizedBox(height: 5),
+                      ElevatedButton.icon(
+                        onPressed: () {},
+                        icon: SvgPicture.asset(
+                          'assets/icons/google.svg',
+                          height: 20,
+                          width: 20,
+                        ),
+                        label: const Text('Login com o Google'),
+                      ),
                     ],
                   ),
                 ),

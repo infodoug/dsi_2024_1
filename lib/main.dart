@@ -18,10 +18,10 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => AuthenticationPage(
+        '/': (context) => const AuthenticationPage(
               title: 'AuthPage',
             ), // Rota para a tela inicial
-        '/home': (context) => HomePage(), // Rota para a tela de detalhes
+        '/home': (context) => const HomePage(), // Rota para a tela de detalhes
       },
     );
   }
@@ -56,11 +56,17 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset('assets/images/logo-1.png'),
+              const SizedBox(
+                height: 20,
+              ),
               ElevatedButton(
                 onPressed: () {
                   showLoginCard();
                 },
                 child: const Text('Fazer login'),
+              ),
+              const SizedBox(
+                height: 10,
               ),
               ElevatedButton(
                 onPressed: () {
