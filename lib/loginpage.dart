@@ -9,7 +9,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FractionallySizedBox(
-        heightFactor: 0.6,
+        heightFactor: 0.5,
         widthFactor: 0.8,
         child: Container(
           decoration: BoxDecoration(
@@ -51,10 +51,7 @@ class _CamposLoginState extends State<CamposLogin> {
                   color: Colors.white,
                   child: Column(
                     children: [
-                      const Text(
-                        'Login',
-                        style: TextStyle(fontSize: 30),
-                      ),
+                      Image.asset('assets/images/logo.png'),
                       const SizedBox(
                         height: 30,
                       ),
@@ -113,7 +110,6 @@ class _CamposLoginState extends State<CamposLogin> {
                                     user.email == _loginemailController.text);
                             if (_usuarioEncontrado.senha ==
                                 _loginsenhaController.text) {
-                              print('ir para pagina inicial');
                             } else {
                               return "Senha incorreta";
                             }
@@ -147,13 +143,18 @@ class _CamposLoginState extends State<CamposLogin> {
                       ),
                       const SizedBox(height: 5),
                       ElevatedButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/home');
+                        },
                         icon: SvgPicture.asset(
                           'assets/icons/google.svg',
                           height: 20,
                           width: 20,
                         ),
-                        label: const Text('Login com o Google'),
+                        label: const Text(
+                          'Login com o Google',
+                          style: TextStyle(color: Colors.black),
+                        ),
                       ),
                     ],
                   ),
@@ -169,9 +170,6 @@ class _CamposLoginState extends State<CamposLogin> {
   void login() {
     if (_formKey.currentState!.validate()) {
       Navigator.pushNamed(context, '/home');
-      print('válido!');
-    } else {
-      print('Inválido!');
     }
   }
 }

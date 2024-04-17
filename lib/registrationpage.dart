@@ -9,7 +9,7 @@ class RegistrationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FractionallySizedBox(
-        heightFactor: 0.8,
+        heightFactor: 0.6,
         widthFactor: 0.8,
         child: Container(
           decoration: BoxDecoration(
@@ -56,10 +56,7 @@ class _CamposRegistrationState extends State<CamposRegistration> {
                   color: Colors.white,
                   child: Column(
                     children: [
-                      const Text(
-                        'Cadastro',
-                        style: TextStyle(fontSize: 30),
-                      ),
+                      Image.asset('assets/images/logo.png'),
                       const SizedBox(
                         height: 10,
                       ),
@@ -72,6 +69,9 @@ class _CamposRegistrationState extends State<CamposRegistration> {
                         validator: (String? value) {
                           if (value!.isEmpty) {
                             return "Digite um nome válido";
+                          }
+                          if (value.length < 3) {
+                            return "E-mail muito curto";
                           }
                           return null;
                         },
@@ -187,13 +187,18 @@ class _CamposRegistrationState extends State<CamposRegistration> {
                       ),
                       const SizedBox(height: 5),
                       ElevatedButton.icon(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/home');
+                        },
                         icon: SvgPicture.asset(
                           'assets/icons/google.svg',
                           height: 20,
                           width: 20,
                         ),
-                        label: Text('Cadastre-se com o Google'),
+                        label: const Text(
+                          'Cadastre-se com o Google',
+                          style: TextStyle(color: Colors.black),
+                        ),
                       ),
                     ],
                   ),
@@ -209,31 +214,27 @@ class _CamposRegistrationState extends State<CamposRegistration> {
   void cadastrar(u) {
     if (_formKey.currentState!.validate()) {
       users.add(u);
-      Navigator.pop(context);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10),
-              topRight: Radius.circular(10),
+
+      Future.delayed(const Duration(seconds: 1), () {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Color(0xFF28730E),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
+            ),
+            content: Text(
+              'Conta criada com sucesso!',
+              style: TextStyle(
+                color: Colors.white,
+              ),
             ),
           ),
-          content: Text(
-            'Conta criada com sucesso!',
-            style: TextStyle(
-              color: Color(0xFF28730E),
-            ),
-          ),
-        ),
-      );
-      for (dynamic usr in users) {
-        print(usr.nome);
-        print(usr.email);
-        print(usr.senha);
-      }
-    } else {
-      print('Não cadastrado!');
+        );
+      });
+      Navigator.pushNamed(context, '/home');
     }
   }
 }

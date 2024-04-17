@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'loginpage.dart';
 import 'registrationpage.dart';
 import 'homepage.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,14 +15,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        fontFamily: 'OpenSans',
+        textTheme: GoogleFonts.openSansTextTheme(),
       ),
       initialRoute: '/',
       routes: {
         '/': (context) => const AuthenticationPage(
               title: 'AuthPage',
-            ), // Rota para a tela inicial
-        '/home': (context) => const HomePage(), // Rota para a tela de detalhes
+            ),
+        '/home': (context) => const HomePage(),
       },
     );
   }
@@ -60,19 +61,28 @@ class _AuthenticationPageState extends State<AuthenticationPage> {
                 height: 20,
               ),
               ElevatedButton(
+                style: const ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(Color(0xFF28730E)),
+                ),
                 onPressed: () {
                   showLoginCard();
                 },
-                child: const Text('Fazer login'),
+                child: const Text(
+                  'Fazer login',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
               const SizedBox(
                 height: 10,
               ),
-              ElevatedButton(
+              TextButton(
                 onPressed: () {
                   showRegistrationCard();
                 },
-                child: const Text('Cadastre-se'),
+                child: const Text(
+                  'Não tem uma conta? Cadastre-se!',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ],
           ),
